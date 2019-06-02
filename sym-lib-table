@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name sputterer)(type Legacy)(uri ${KIPRJMOD}/sputterer.lib)(options "")(descr ""))
+)
