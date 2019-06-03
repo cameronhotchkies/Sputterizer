@@ -1,3 +1,4 @@
+// https://github.com/shannon-greenlight/Arduino-Libs
 #include <TerminalVT100.h>
 
 #include <RotaryEncoder.h>
@@ -51,8 +52,13 @@ String theFunctions[] = {
 TerminalVT100 t;
 LED_Driver_5916 d = LED_Driver_5916();
 RotaryEncoder e = RotaryEncoder(num_fxns);
-void intFxn(void) {
-  e.updateEncoder();
+
+void intFxnA(void) {
+  e.aChanInt();
+}
+
+void intFxnB(void) {
+  e.bChanInt();
 }
 
 void setup() {
@@ -66,10 +72,10 @@ void setup() {
 
   t = TerminalVT100();
   e.t = t;
-  //e.debug = true;
+  e.debug = true;
   
-  attachInterrupt(0, intFxn, RISING);
-  attachInterrupt(1, intFxn, RISING);
+  attachInterrupt(0, intFxnB, RISING);
+  attachInterrupt(1, intFxnA, RISING);
   Timer1.initialize(200000);
   Timer1.attachInterrupt(heartbeat);
 
@@ -95,13 +101,17 @@ boolean isDifferent(float a, float b) {
   return (ai!=bi);
 }
 
+void printVal(String row, String label, String val) {
+  t.setRow(row);
+  t.print(label);
+  t.clrToEOL();
+  t.println(val);
+}
+
 void setFxn() {
   fxn = e.getEncoderValue();
   theFxn = theFunctions[fxn];
-  t.setCursor(FXN_ROW,"1");
-  t.println("Fxn: "+theFxn);
-  //t.setCursor("15","1");
-  //debugInt("Fxn: ",fxn);
+  printVal(FXN_ROW,"Fxn: ",theFxn);
   d.set_LED(fxn);
 }
 
@@ -113,10 +123,10 @@ void setLen() {
   if(theFxn=="Stretch" || theFxn=="Maytag") {
     d *= 10;
   }
+  //printDebug("PL: "+String(pulseLen)+"d: "+String(d));
   if(pulseLen!=d) {
     pulseLen = d;
-    t.setCursor(PULSE_LEN_ROW,"1");
-    debugInt("Pulse Length: ",d);
+    printVal(PULSE_LEN_ROW,"Pulse Length: ",String(d));
   }  
   
 }
@@ -129,8 +139,7 @@ void setDecay() {
   decay = max(.1,decay);
   if(isDifferent(decay,theDecay)) {
     theDecay = decay;
-    t.setCursor(DECAY_ROW,"1");
-    t.println("Decay: "+String(decay));
+    printVal(DECAY_ROW,"Decay: ",String(decay));
   }
 }
 
@@ -140,8 +149,7 @@ void setRnd() {
   r *= 10;
   if(isDifferent(rndVal,r)) {
     rndVal = r;
-    t.setCursor(RANDOM_ROW,"1");
-    debugFloat("Randomness: ", rndVal);
+    printVal(RANDOM_ROW,"Randomness: ",String(rndVal));
   }
 }
 
@@ -151,9 +159,8 @@ void setDelay() {
   d /= 10;
   d *= 100;
   if(d!=theDelay) {
-    t.setCursor(DECAY_ROW,"1");
     theDelay = d;
-    debugInt("Delay: ",theDelay);
+    printVal(DECAY_ROW,"Delay: ",String(theDelay));
   }  
 }
 void setRepeat() {
@@ -164,9 +171,8 @@ void setRepeat() {
   rpt = int(q);
   rpt += 1;
   if(rpt!=rptCount) {
-    t.setCursor(RANDOM_ROW,"1");
     rptCount = rpt;
-    debugInt("Repeat: ",rptCount);
+    printVal(RANDOM_ROW,"Repeat: ",String(rptCount));
   }
 }
 
@@ -263,23 +269,6 @@ void heartbeat()
   }
 }
 
-void blinkOn() {
-  t.print("\e[5m");
-}
-
-void blinkOff() {
-  t.print("\e[0m");
-}
-
-void debugInt(String s,int val) {
-  t.println(s+ String(val));
-}
-
-void debugFloat(String s,float val) {
-  t.print(s);
-  t.println(String(val));
-}
-
 void wait_button_up() {
   while(digitalRead(inPin)) {}
 }
@@ -295,7 +284,7 @@ void aWrite(int val) {
   //aVal -= 128;
   aVal = max(0,aVal);
   aVal = min(255,aVal);
-  printDebug("Val: " + String(val) + " aVal: " + String(aVal));
+  //printDebug("Val: " + String(val) + " aVal: " + String(aVal));
   //t.setCursor(DEBUG_ROW,"1");
   //t.println(val);
   //t.println(aVal);
@@ -351,7 +340,6 @@ void sputterDown() {
 }
 
 void pulse(int pulse_length) {
-  //debugInt("Pulsing: ",pulse_length);
   digitalWrite(gatePin,HIGH);
   delay(pulse_length);  
   digitalWrite(gatePin,LOW);  
@@ -415,9 +403,9 @@ void loop() {
    wait_button_up();
    //pinMode(pwmPin, OUTPUT);
    t.setCursor(TRIGGER_ROW,"1");
-   blinkOn();
+   t.blinkOn();
    t.print("TRIGGERED");
-   blinkOff();
+   t.blinkOff();
    switch(fxn) {
       case 0:
         sputterUp();
@@ -472,6 +460,7 @@ void loop() {
     trig = false;
     wait_button_up();
     t.setCursor(TRIGGER_ROW,"1");
+    t.clrToEOL();
     //pinMode(pwmPin, INPUT);
     //digitalWrite(pwmPin, HIGH); //turn pullup resistor off
    //t.print("");
@@ -480,5 +469,5 @@ void loop() {
   if(fxn!=e.getEncoderValue()) {
     setFxn();
   }
-
+  //heartbeat();
 }
