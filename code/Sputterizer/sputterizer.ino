@@ -72,7 +72,7 @@ void setup() {
 
   t = TerminalVT100();
   e.t = t;
-  e.debug = true;
+  //e.debug = true;
   
   attachInterrupt(0, intFxnB, RISING);
   attachInterrupt(1, intFxnA, RISING);
@@ -92,6 +92,7 @@ void setup() {
 
 void printDebug(String s) {
   t.setCursor(DEBUG_ROW,"1");
+  t.clrToEOL();
   t.print(s);
 }
 
@@ -284,7 +285,7 @@ void aWrite(int val) {
   //aVal -= 128;
   aVal = max(0,aVal);
   aVal = min(255,aVal);
-  //printDebug("Val: " + String(val) + " aVal: " + String(aVal));
+  printDebug("Val: " + String(val) + " aVal: " + String(aVal));
   //t.setCursor(DEBUG_ROW,"1");
   //t.println(val);
   //t.println(aVal);
@@ -371,7 +372,7 @@ void maytag() {
     sum=0;
     while(sum<=pulseLen && fxn==e.getEncoderValue() && trig) {
       int val = analogRead(lenPin);
-      printDebug("val: " + String(val));
+      //printDebug("val: " + String(val));
       rndm = random(10,100);
       sum += rndm;
       digitalWrite(gatePin,HIGH);
@@ -388,9 +389,15 @@ void maytag() {
 
 void boom() {
   while(fxn==e.getEncoderValue() && trig) {
+    int rndm = random(1,100);
+    if(rndm>50) {
+      //sputterUp();
+    } else {
+      //sputterDown();
+    }
     int val = analogRead(lenPin);
     analogWrite(pwmPin,val/4);
-    printDebug("val: " + String(val));  
+    printDebug("val: " + String(val/4));  
   }
 }
 
