@@ -49,6 +49,7 @@ String theFunctions[] = {
   "Boom"
 };
 
+// useful objects
 TerminalVT100 t;
 LED_Driver_5916 d = LED_Driver_5916();
 RotaryEncoder e = RotaryEncoder(num_fxns);
