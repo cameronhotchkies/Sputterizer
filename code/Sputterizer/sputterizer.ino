@@ -1,11 +1,13 @@
 // https://github.com/shannon-greenlight/Arduino-Libs
 #include <TerminalVT100.h>
 
+/*
 #include <RotaryEncoder.h>
 
 #include <LED_Driver_5916.h>
-
+*/
 #include <TimerOne.h>
+#include <Selector.h>
 
 // vt-100 row positions
 #define FXN_ROW "6"
@@ -46,20 +48,21 @@ String theFunctions[] = {
   "Stretch",
   "Toggle",
   "Maytag",
-  "Boom"
+  "Boom!"
 };
 
 // useful objects
 TerminalVT100 t;
-LED_Driver_5916 d = LED_Driver_5916();
-RotaryEncoder e = RotaryEncoder(num_fxns);
+Selector s = Selector(num_fxns);
+
+//LED_Driver_5916 d = LED_Driver_5916();
 
 void intFxnA(void) {
-  e.aChanInt();
+  s.e.aChanInt();
 }
 
 void intFxnB(void) {
-  e.bChanInt();
+  s.e.bChanInt();
 }
 
 void setup() {
@@ -71,15 +74,11 @@ void setup() {
   digitalWrite(gatePin,LOW);
   analogWrite(pwmPin,255);
 
+  //s;
   t = TerminalVT100();
-  e.t = t;
-  //e.debug = true;
-  
-  attachInterrupt(0, intFxnB, RISING);
-  attachInterrupt(1, intFxnA, RISING);
-  Timer1.initialize(200000);
-  Timer1.attachInterrupt(heartbeat);
+  //s.e.t = t;
 
+  //e.debug = true;
 // Use Putty to communicate (VT100 terminal)
   t.clrScreen();
   t.setCursor("1","1");
@@ -88,6 +87,11 @@ void setup() {
   t.println("*      Sputterizer       *");
   t.println("**************************");
   setFxn();
+  
+  attachInterrupt(0, intFxnB, RISING);
+  attachInterrupt(1, intFxnA, RISING);
+  Timer1.initialize(200000);
+  Timer1.attachInterrupt(heartbeat);
 
 }
 
@@ -111,10 +115,10 @@ void printVal(String row, String label, String val) {
 }
 
 void setFxn() {
-  fxn = e.getEncoderValue();
+  fxn = s.get();
   theFxn = theFunctions[fxn];
   printVal(FXN_ROW,"Fxn: ",theFxn);
-  d.set_LED(fxn);
+  s.set(fxn);
 }
 
 void setLen() {
@@ -189,46 +193,46 @@ void heartbeat()
         trig = !trig;
         break;
       case 48:
-        e.setEncoderValue(9);
+        s.set(9);
         break;
       case 49:
-        e.setEncoderValue(0);
+        s.set(0);
         break;
       case 50:
-        e.setEncoderValue(1);
+        s.set(1);
         break;
       case 51:
-        e.setEncoderValue(2);
+        s.set(2);
         break;
       case 52:
-        e.setEncoderValue(3);
+        s.set(3);
         break;
       case 53:
-        e.setEncoderValue(4);
+        s.set(4);
         break;
       case 54:
-        e.setEncoderValue(5);
+        s.set(5);
         break;
       case 55:
-        e.setEncoderValue(6);
+        s.set(6);
         break;
       case 56:
-        e.setEncoderValue(7);
+        s.set(7);
         break;
       case 57:
-        e.setEncoderValue(8);
+        s.set(8);
         break;
       case 45:
-        e.setEncoderValue(10);
+        s.set(10);
         break;
       case 61:
-        e.setEncoderValue(11);
+        s.set(11);
         break;
       case 44:
-        e.decEncoder();
+        s.dec();
         break;
       case 46:
-        e.incEncoder();
+        s.inc();
         break;
       case 33:
         t.setRow("10");
@@ -349,7 +353,7 @@ void pulse(int pulse_length) {
 
 void stretch() {
   int rpt = rptCount;
-  while(rpt && fxn==e.getEncoderValue() && trig) {
+  while(rpt && fxn==s.get() && trig) {
     delay(theDelay);
     pulse(pulseLen);
     rpt--;
@@ -363,15 +367,14 @@ void toggle() {
 }
 
 void maytag() {
-  //delay(theDelay);
   int sum=0;
   int rndm;
   int rpt = rptCount;
   //printDebug("RptCnt: " + String(rptCount));
-  while(rpt && fxn==e.getEncoderValue() && trig) {
+  while(rpt && fxn==s.get() && trig) {
     delay(theDelay);
     sum=0;
-    while(sum<=pulseLen && fxn==e.getEncoderValue() && trig) {
+    while(sum<=pulseLen && fxn==s.get() && trig) {
       int val = analogRead(lenPin);
       //printDebug("val: " + String(val));
       rndm = random(10,100);
@@ -389,7 +392,7 @@ void maytag() {
 }
 
 void boom() {
-  while(fxn==e.getEncoderValue() && trig) {
+  while(fxn==s.get() && trig) {
     int rndm = random(1,100);
     if(rndm>50) {
       //sputterUp();
@@ -430,23 +433,23 @@ void loop() {
         sputterUp();
         break;
       case 4:
-         while(fxn==e.getEncoderValue() && !digitalRead(inPin) && trig) {
+         while(fxn==s.get() && !digitalRead(inPin) && trig) {
           sputterUp();
         }
         break;
       case 5:
-        while(fxn==e.getEncoderValue() && !digitalRead(inPin) && trig) {
+        while(fxn==s.get() && !digitalRead(inPin) && trig) {
           sputterDown();
         }
         break;
       case 6:
-        while(fxn==e.getEncoderValue() && !digitalRead(inPin) && trig) {
+        while(fxn==s.get() && !digitalRead(inPin) && trig) {
           sputterUp();
           sputterDown();
         }
         break;
       case 7:
-        while(fxn==e.getEncoderValue() && !digitalRead(inPin) && trig) {
+        while(fxn==s.get() && !digitalRead(inPin) && trig) {
           sputterDown();
           sputterUp();
         }
@@ -474,7 +477,7 @@ void loop() {
    //t.print("");
    //analogWrite(pwmPin,255);
   }
-  if(fxn!=e.getEncoderValue()) {
+  if(fxn!=s.get()) {
     setFxn();
   }
   //heartbeat();
