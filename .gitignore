@@ -60,3 +60,9 @@ _notes
 *.bak
 fp-*
 _autosave*
+
+Debug*
+Release*
+__vm*
+.vs*
+*.vcxproj*
