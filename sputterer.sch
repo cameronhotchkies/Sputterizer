@@ -32,9 +32,9 @@ U 1 1 5CDED4B8
 P 5850 2900
 F 0 "RV1" H 5782 2854 50  0000 R CNN
 F 1 "10K" H 5782 2945 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Bourns_PTV09A-2_Single_Horizontal" H 5850 2900 50  0001 C CNN
+F 2 "panel:Potentiometer_Bourns_PTD901_Single_Horizontal" H 5850 2900 50  0001 C CNN
 F 3 "~" H 5850 2900 50  0001 C CNN
-F 4 "PTV09A-2025F-B103-ND" H 5850 2900 50  0001 C CNN "Digi-Key Part"
+F 4 "PTD901-1015K-B103-ND" H 5850 2900 50  0001 C CNN "Digi-Key Part"
 	1    5850 2900
 	-1   0    0    1   
 $EndComp
@@ -44,9 +44,9 @@ U 1 1 5CDF01D7
 P 6550 2900
 F 0 "RV2" H 6482 2854 50  0000 R CNN
 F 1 "10K" H 6482 2945 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Bourns_PTV09A-2_Single_Horizontal" H 6550 2900 50  0001 C CNN
+F 2 "panel:Potentiometer_Bourns_PTD901_Single_Horizontal" H 6550 2900 50  0001 C CNN
 F 3 "~" H 6550 2900 50  0001 C CNN
-F 4 "PTV09A-2025F-B103-ND" H 6550 2900 50  0001 C CNN "Digi-Key Part"
+F 4 "PTD901-1015K-B103-ND" H 6550 2900 50  0001 C CNN "Digi-Key Part"
 	1    6550 2900
 	-1   0    0    1   
 $EndComp
@@ -56,9 +56,9 @@ U 1 1 5CDF0A3B
 P 7250 2900
 F 0 "RV3" H 7182 2854 50  0000 R CNN
 F 1 "10K" H 7182 2945 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Bourns_PTV09A-2_Single_Horizontal" H 7250 2900 50  0001 C CNN
+F 2 "panel:Potentiometer_Bourns_PTD901_Single_Horizontal" H 7250 2900 50  0001 C CNN
 F 3 "~" H 7250 2900 50  0001 C CNN
-F 4 "PTV09A-2025F-B103-ND" H 7250 2900 50  0001 C CNN "Digi-Key Part"
+F 4 "PTD901-1015K-B103-ND" H 7250 2900 50  0001 C CNN "Digi-Key Part"
 	1    7250 2900
 	-1   0    0    1   
 $EndComp
@@ -102,20 +102,20 @@ Wire Wire Line
 $Comp
 L power:+5V #PWR0102
 U 1 1 5CDF3E1A
-P 4700 1700
-F 0 "#PWR0102" H 4700 1550 50  0001 C CNN
-F 1 "+5V" H 4715 1873 50  0000 C CNN
-F 2 "" H 4700 1700 50  0001 C CNN
-F 3 "" H 4700 1700 50  0001 C CNN
-	1    4700 1700
+P 4700 1650
+F 0 "#PWR0102" H 4700 1500 50  0001 C CNN
+F 1 "+5V" H 4715 1823 50  0000 C CNN
+F 2 "" H 4700 1650 50  0001 C CNN
+F 3 "" H 4700 1650 50  0001 C CNN
+	1    4700 1650
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4700 1700 4700 1800
+	4700 1650 4700 1800
 Wire Wire Line
 	5850 2750 5850 1800
 Wire Wire Line
-	5850 1800 4700 1800
+	5850 1800 5100 1800
 Connection ~ 4700 1800
 Wire Wire Line
 	4700 1800 4700 1900
@@ -318,44 +318,6 @@ Wire Wire Line
 	9350 4950 9150 4950
 Wire Wire Line
 	9150 4950 9150 5550
-Wire Wire Line
-	9150 5550 8700 5550
-$Comp
-L Diode:1N4148 D5
-U 1 1 5CE381FC
-P 8700 4550
-F 0 "D5" V 8654 4629 50  0000 L CNN
-F 1 "1N4148" V 8745 4629 50  0000 L CNN
-F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8700 4375 50  0001 C CNN
-F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8700 4550 50  0001 C CNN
-F 4 "1N4148-TPMSCT-ND" V 8700 4550 50  0001 C CNN "Digi-Key Part"
-	1    8700 4550
-	0    1    1    0   
-$EndComp
-$Comp
-L Diode:1N4148 D6
-U 1 1 5CE38206
-P 8700 5150
-F 0 "D6" V 8654 5229 50  0000 L CNN
-F 1 "1N4148" V 8745 5229 50  0000 L CNN
-F 2 "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" H 8700 4975 50  0001 C CNN
-F 3 "https://assets.nexperia.com/documents/data-sheet/1N4148_1N4448.pdf" H 8700 5150 50  0001 C CNN
-F 4 "1N4148-TPMSCT-ND" V 8700 5150 50  0001 C CNN "Digi-Key Part"
-	1    8700 5150
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	8700 4300 8700 4400
-Wire Wire Line
-	8700 4700 8700 4850
-Connection ~ 8700 4850
-Wire Wire Line
-	8700 4850 9050 4850
-Wire Wire Line
-	8700 5000 8700 4850
-Wire Wire Line
-	8700 5300 8700 5550
-Connection ~ 8700 5550
 $Comp
 L Amplifier_Operational:NE5532 U1
 U 1 1 5CE45136
@@ -473,24 +435,11 @@ Wire Wire Line
 	6250 5350 6250 5550
 Connection ~ 6250 5550
 Wire Wire Line
-	6250 5550 8700 5550
-Wire Wire Line
 	2700 3950 2700 5550
 Wire Wire Line
 	2700 5550 4900 5550
 Connection ~ 2700 3950
 Connection ~ 4900 5550
-$Comp
-L power:+5V #PWR0103
-U 1 1 5CE8DC13
-P 8700 4300
-F 0 "#PWR0103" H 8700 4150 50  0001 C CNN
-F 1 "+5V" H 8715 4473 50  0000 C CNN
-F 2 "" H 8700 4300 50  0001 C CNN
-F 3 "" H 8700 4300 50  0001 C CNN
-	1    8700 4300
-	1    0    0    -1  
-$EndComp
 $Comp
 L Transistor_FET:BS170 Q1
 U 1 1 5CE19859
@@ -569,7 +518,7 @@ L Connector_Generic:Conn_02x08_Odd_Even J4
 U 1 1 5CE4CAA3
 P 2850 6650
 F 0 "J4" V 2946 6162 50  0000 R CNN
-F 1 "2X8 Header" V 2855 6162 50  0000 R CNN
+F 1 "2X8 Header" V 2855 6162 50  0001 R CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_2x08_P2.54mm_Vertical" H 2850 6650 50  0001 C CNN
 F 3 "~" H 2850 6650 50  0001 C CNN
 F 4 "S2011EC-08-ND" V 2850 6650 50  0001 C CNN "Digi-Key Part"
@@ -651,32 +600,6 @@ F 3 "" H 2750 7200 50  0001 C CNN
 	1    2750 7200
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:+5V #PWR0110
-U 1 1 5CE9B86C
-P 3150 6050
-F 0 "#PWR0110" H 3150 5900 50  0001 C CNN
-F 1 "+5V" H 3165 6223 50  0000 C CNN
-F 2 "" H 3150 6050 50  0001 C CNN
-F 3 "" H 3150 6050 50  0001 C CNN
-	1    3150 6050
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3050 6350 3050 6200
-Wire Wire Line
-	3050 6200 3150 6200
-Wire Wire Line
-	3150 6200 3150 6050
-Wire Wire Line
-	3050 6850 3050 7000
-Wire Wire Line
-	3050 7000 3450 7000
-Wire Wire Line
-	3450 7000 3450 6200
-Wire Wire Line
-	3450 6200 3150 6200
-Connection ~ 3150 6200
 Wire Wire Line
 	2850 6850 2850 6950
 Wire Wire Line
@@ -779,15 +702,11 @@ Connection ~ 2350 6550
 Wire Wire Line
 	2350 6550 2350 6950
 Wire Wire Line
-	3450 6200 4000 6200
-Wire Wire Line
 	4000 6200 4000 6500
-Connection ~ 3450 6200
 Wire Wire Line
 	4000 6200 4500 6200
 Wire Wire Line
 	4500 6200 4500 6500
-Connection ~ 4000 6200
 Wire Wire Line
 	2750 7150 4000 7150
 Wire Wire Line
@@ -1000,7 +919,7 @@ U 1 1 5D31D731
 P 5850 6350
 F 0 "LP1" H 6078 6221 50  0000 L CNN
 F 1 "LightPipe" H 6078 6130 50  0000 L CNN
-F 2 "sputterer:LightPipe" H 5850 6350 50  0001 C CNN
+F 2 "sputterizer:LightPipe" H 5850 6350 50  0001 C CNN
 F 3 "http://static.vcclite.com/pdf/7513D2-L%20Series%20BrightPipes%20Optical%20Lightpipes.pdf" H 5850 6350 50  0001 C CNN
 F 4 "L71537-ND" H 5850 6350 50  0001 C CNN "Digi-Key Part"
 	1    5850 6350
@@ -1085,8 +1004,6 @@ Wire Wire Line
 	8500 4300 8500 4850
 Wire Wire Line
 	8500 4850 8350 4850
-Wire Wire Line
-	8500 4850 8700 4850
 Connection ~ 8500 4850
 Wire Wire Line
 	7150 4850 7150 4950
@@ -1252,7 +1169,7 @@ L Connector:TestPoint TP1
 U 1 1 5D129D3E
 P 750 6450
 F 0 "TP1" H 808 6568 50  0000 L CNN
-F 1 "TestPoint" H 808 6477 50  0000 L CNN
+F 1 "TestPoint" H 808 6477 50  0001 L CNN
 F 2 "TestPoint:TestPoint_Keystone_5005-5009_Compact" H 950 6450 50  0001 C CNN
 F 3 "~" H 950 6450 50  0001 C CNN
 F 4 "36-5006-ND" H 750 6450 50  0001 C CNN "Digi-Key Part"
@@ -1263,4 +1180,58 @@ Wire Wire Line
 	750  6450 750  6550
 Wire Wire Line
 	750  6550 1250 6550
+$Comp
+L Connector:Conn_01x02_Male JP3
+U 1 1 5D04B7B1
+P 5350 2300
+F 0 "JP3" V 5504 2112 50  0000 R CNN
+F 1 "Conn_01x02_Male" V 5413 2112 50  0001 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 5350 2300 50  0001 C CNN
+F 3 "~" H 5350 2300 50  0001 C CNN
+F 4 "952-2261-ND" V 5350 2300 50  0001 C CNN "Digi-Key Part"
+	1    5350 2300
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5100 1800 5100 2200
+Wire Wire Line
+	5100 2200 5150 2200
+Connection ~ 5100 1800
+Wire Wire Line
+	5100 1800 4700 1800
+Text Notes 5150 2500 0    50   ~ 0
+short to prevent \nprogramming
+$Comp
+L power:+12V #PWR02
+U 1 1 5D093104
+P 4400 1650
+F 0 "#PWR02" H 4400 1500 50  0001 C CNN
+F 1 "+12V" H 4415 1823 50  0000 C CNN
+F 2 "" H 4400 1650 50  0001 C CNN
+F 3 "" H 4400 1650 50  0001 C CNN
+	1    4400 1650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0116
+U 1 1 5D12A401
+P 4500 6150
+F 0 "#PWR0116" H 4500 6000 50  0001 C CNN
+F 1 "+5V" H 4515 6323 50  0000 C CNN
+F 2 "" H 4500 6150 50  0001 C CNN
+F 3 "" H 4500 6150 50  0001 C CNN
+	1    4500 6150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4500 6150 4500 6200
+Connection ~ 4500 6200
+Wire Wire Line
+	5000 2300 5150 2300
+Wire Wire Line
+	6250 5550 9150 5550
+Wire Wire Line
+	8500 4850 9050 4850
+Wire Wire Line
+	4400 1650 4400 1900
 $EndSCHEMATC

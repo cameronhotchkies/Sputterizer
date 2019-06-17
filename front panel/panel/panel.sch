@@ -20,7 +20,7 @@ U 1 1 5CECDE72
 P 4500 1550
 F 0 "H1" H 4600 1596 50  0000 L CNN
 F 1 "Pot 1" H 4600 1505 50  0000 L CNN
-F 2 "MountingHole:MountingHole_6.5mm" H 4500 1550 50  0001 C CNN
+F 2 "panel:MountingHole_7.3mm" H 4500 1550 50  0001 C CNN
 F 3 "~" H 4500 1550 50  0001 C CNN
 	1    4500 1550
 	1    0    0    -1  
@@ -31,7 +31,7 @@ U 1 1 5CECE4E6
 P 4500 2000
 F 0 "H2" H 4600 2046 50  0000 L CNN
 F 1 "Pot 2" H 4600 1955 50  0000 L CNN
-F 2 "MountingHole:MountingHole_6.5mm" H 4500 2000 50  0001 C CNN
+F 2 "panel:MountingHole_7.3mm" H 4500 2000 50  0001 C CNN
 F 3 "~" H 4500 2000 50  0001 C CNN
 	1    4500 2000
 	1    0    0    -1  
@@ -42,7 +42,7 @@ U 1 1 5CECE6AD
 P 4500 2450
 F 0 "H3" H 4600 2496 50  0000 L CNN
 F 1 "Pot 3" H 4600 2405 50  0000 L CNN
-F 2 "MountingHole:MountingHole_6.5mm" H 4500 2450 50  0001 C CNN
+F 2 "panel:MountingHole_7.3mm" H 4500 2450 50  0001 C CNN
 F 3 "~" H 4500 2450 50  0001 C CNN
 	1    4500 2450
 	1    0    0    -1  
@@ -53,7 +53,7 @@ U 1 1 5CECE8A2
 P 4500 2850
 F 0 "H4" H 4600 2896 50  0000 L CNN
 F 1 "Jack 1" H 4600 2805 50  0000 L CNN
-F 2 "panel:MountingHole_6.5mmGFL" H 4500 2850 50  0001 C CNN
+F 2 "panel:MountingHole_7.3mm" H 4500 2850 50  0001 C CNN
 F 3 "~" H 4500 2850 50  0001 C CNN
 	1    4500 2850
 	1    0    0    -1  
@@ -324,4 +324,48 @@ Wire Wire Line
 Wire Wire Line
 	7750 2600 7300 2600
 Connection ~ 7300 2600
+$Comp
+L Mechanical:MountingHole H26
+U 1 1 5D01A570
+P 7050 4000
+F 0 "H26" H 7150 4046 50  0000 L CNN
+F 1 "MountingHole" H 7150 3955 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 7050 4000 50  0001 C CNN
+F 3 "~" H 7050 4000 50  0001 C CNN
+	1    7050 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H28
+U 1 1 5D01B1DC
+P 8000 4000
+F 0 "H28" H 8100 4046 50  0000 L CNN
+F 1 "MountingHole" H 8100 3955 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 8000 4000 50  0001 C CNN
+F 3 "~" H 8000 4000 50  0001 C CNN
+	1    8000 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H27
+U 1 1 5D01B99C
+P 7050 4300
+F 0 "H27" H 7150 4346 50  0000 L CNN
+F 1 "MountingHole" H 7150 4255 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 7050 4300 50  0001 C CNN
+F 3 "~" H 7050 4300 50  0001 C CNN
+	1    7050 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H29
+U 1 1 5D01BF0F
+P 8000 4300
+F 0 "H29" H 8100 4346 50  0000 L CNN
+F 1 "MountingHole" H 8100 4255 50  0000 L CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 8000 4300 50  0001 C CNN
+F 3 "~" H 8000 4300 50  0001 C CNN
+	1    8000 4300
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
