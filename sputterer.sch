@@ -914,18 +914,6 @@ F 4 "399-5444-1-ND" H 6250 5250 50  0001 C CNN "Digi-Key Part"
 	1    0    0    -1  
 $EndComp
 $Comp
-L sputterer:LightPipe LP1
-U 1 1 5D31D731
-P 5850 6350
-F 0 "LP1" H 6078 6221 50  0000 L CNN
-F 1 "LightPipe" H 6078 6130 50  0000 L CNN
-F 2 "sputterizer:LightPipe" H 5850 6350 50  0001 C CNN
-F 3 "http://static.vcclite.com/pdf/7513D2-L%20Series%20BrightPipes%20Optical%20Lightpipes.pdf" H 5850 6350 50  0001 C CNN
-F 4 "L71537-ND" H 5850 6350 50  0001 C CNN "Digi-Key Part"
-	1    5850 6350
-	1    0    0    -1  
-$EndComp
-$Comp
 L Amplifier_Operational:NE5532 U1
 U 2 1 5CE31F97
 P 5400 4950

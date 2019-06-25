@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source C:\Users\Shannon\Dropbox\moog\sputterizer\sputterer.sch)
-    (date "6/16/2019 2:29:02 PM")
+    (date "6/23/2019 7:39:15 AM")
     (tool "Eeschema (5.1.2)-1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -310,15 +310,6 @@
       (libsource (lib Device) (part C_Small) (description "Unpolarized capacitor, small symbol"))
       (sheetpath (names /) (tstamps /))
       (tstamp 5D30E24E))
-    (comp (ref LP1)
-      (value LightPipe)
-      (footprint sputterizer:LightPipe)
-      (datasheet http://static.vcclite.com/pdf/7513D2-L%20Series%20BrightPipes%20Optical%20Lightpipes.pdf)
-      (fields
-        (field (name "Digi-Key Part") L71537-ND))
-      (libsource (lib sputterer) (part LightPipe) (description ""))
-      (sheetpath (names /) (tstamps /))
-      (tstamp 5D31D731))
     (comp (ref R10)
       (value 10.0K)
       (footprint Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal)
@@ -690,14 +681,7 @@
       (pins
         (pin (num 1) (name D) (type passive))
         (pin (num 2) (name G) (type input))
-        (pin (num 3) (name S) (type passive))))
-    (libpart (lib sputterer) (part LightPipe)
-      (docs http://static.vcclite.com/pdf/7513D2-L%20Series%20BrightPipes%20Optical%20Lightpipes.pdf)
-      (fields
-        (field (name Reference) LP)
-        (field (name Value) LightPipe)
-        (field (name Footprint) sputterer:LightPipe)
-        (field (name "Digi-Key Part") L71537-ND))))
+        (pin (num 3) (name S) (type passive)))))
   (libraries
     (library (logical Amplifier_Operational)
       (uri "C:\\Program Files\\KiCad\\share\\kicad\\library/Amplifier_Operational.lib"))
@@ -712,9 +696,7 @@
     (library (logical MCU_Module)
       (uri "C:\\Program Files\\KiCad\\share\\kicad\\library/MCU_Module.lib"))
     (library (logical Transistor_FET)
-      (uri "C:\\Program Files\\KiCad\\share\\kicad\\library/Transistor_FET.lib"))
-    (library (logical sputterer)
-      (uri C:\Users\Shannon\Dropbox\moog\sputterizer/sputterer.lib)))
+      (uri "C:\\Program Files\\KiCad\\share\\kicad\\library/Transistor_FET.lib")))
   (nets
     (net (code 1) (name "Net-(A1-Pad5)")
       (node (ref J5) (pin 7))
