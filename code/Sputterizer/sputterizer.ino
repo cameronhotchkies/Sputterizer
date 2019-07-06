@@ -39,7 +39,7 @@ volatile float theDecay;
 volatile int theDelay=0;
 
 // User variables
-const PROGMEM int sl = 10;
+const int sl = 10;
 unsigned int init_delay[sl];
 unsigned int longest_pulse[sl];
 unsigned int shortest_pulse[sl];
@@ -62,9 +62,9 @@ unsigned int user_min = 0;
 unsigned int user_max = 99999;
 
 // device function defs
-int fxn = 0;
+unsigned int fxn = 0;
 String theFxn = "";
-const PROGMEM int num_fxns=12;
+const int num_fxns=12;
 Selector s = Selector(num_fxns);
 void intFxnA(void) {
   s.e.aChanInt();
@@ -74,7 +74,7 @@ void intFxnB(void) {
   s.e.bChanInt();
 }
 
-const PROGMEM String theFunctions[] = {
+const String theFunctions[] = {
   "Up",
   "Down",
   "Up/Down",
@@ -132,9 +132,10 @@ void setup() {
   t.printChars(stars, "*");
   t.println("");
   t.printTitle(stars, title);
-  title = "v1.0";
+  title = "v1.1";
   t.printTitle(stars, title);
   t.printChars(stars, "*");
+
 
   for (sequence_index = 0; sequence_index < sl; sequence_index++) {
 	  init_delay[sequence_index]=0;
@@ -149,7 +150,7 @@ void setup() {
   
   // retrieve stored data or store init data
   String data_avail="";
-  eeprom_get_string(data_available_offset,data_avail);
+  eep_get_string(data_available_offset,data_avail);
   //t.println("Data avail: " + data_avail);
   if (data_avail == data_available && !digitalRead(inPin)) {
 	  retrieve_data();
@@ -157,7 +158,7 @@ void setup() {
   else {
 	  store_data();
 	  // mark data is stored and available
-	  eeprom_update_string(data_available_offset, data_available);
+	  eep_update_string(data_available_offset, data_available);
   }
   
   //debug();
@@ -345,7 +346,7 @@ void setRepeat() {
   }
 }
 
-void eeprom_get_string(unsigned int base_offset,String& s) {
+void eep_get_string(unsigned int base_offset,String& s) {
 	int i = 0;
 	int c;
 	s.remove(0, s.length());
@@ -353,14 +354,14 @@ void eeprom_get_string(unsigned int base_offset,String& s) {
 		c = EEPROM.read(i + base_offset);
 		i++;
 		if(c) s.concat(char(c));
-	} while (c);
+	} while (c && i<100);
 }
 
-bool eeprom_update_string(unsigned int base_offset, String& s) {
+bool eep_update_string(unsigned int base_offset, String& s) {
 	bool updated = false;
 	//printDebug("Get String: " + String(s));
 	String temp;
-	eeprom_get_string(base_offset, temp);
+	eep_get_string(base_offset, temp);
 	if (temp != s) {
 		updated = true;
 		// also writes 0 terminator
@@ -373,7 +374,7 @@ bool eeprom_update_string(unsigned int base_offset, String& s) {
 /*
 */
 
-bool eeprom_update_array(unsigned int base_offset, unsigned int arr[]) {
+bool eep_update_array(unsigned int base_offset, unsigned int arr[]) {
 	bool updated = false;
 	unsigned int la[sl];
 	EEPROM.get(base_offset, la);
@@ -388,23 +389,41 @@ bool eeprom_update_array(unsigned int base_offset, unsigned int arr[]) {
 	return updated;
 }
 
+bool eep_update_int(unsigned int base_offset, unsigned int val) {
+	int existing_val;
+	bool updated = false;
+	EEPROM.get(base_offset,existing_val);
+	//t.println("Existing Value: " + String(existing_val));
+	if (existing_val != val) {
+		EEPROM.write(base_offset, val & 255);
+		EEPROM.write(base_offset+1, val >> 8);
+		updated = true;
+	}
+	return updated;
+}
+
 bool store_data() {
 	bool updated = false;
-	EEPROM.update(fxn_offset, fxn);
-	updated |= eeprom_update_array(init_delay_offset, init_delay);
-	updated |= eeprom_update_array(longest_pulse_offset, longest_pulse);
-	updated |= eeprom_update_array(shortest_pulse_offset, shortest_pulse);
-	updated |= eeprom_update_array(decay_factor_offset, decay_factor);
-	updated |= eeprom_update_array(random_factor_offset, random_factor);
-	updated |= eeprom_update_array(repeat_count_offset, repeat_count);
-	updated |= eeprom_update_string(sequence_offset, sequence);
-	EEPROM.update(sequence_index_offset, sequence_index);
+	//EEPROM.update(fxn_offset, fxn);
+	//EEPROM.write(fxn_offset + 1, 0);
+	updated |= eep_update_int(fxn_offset, fxn);
+	updated |= eep_update_array(init_delay_offset, init_delay);
+	updated |= eep_update_array(longest_pulse_offset, longest_pulse);
+	updated |= eep_update_array(shortest_pulse_offset, shortest_pulse);
+	updated |= eep_update_array(decay_factor_offset, decay_factor);
+	updated |= eep_update_array(random_factor_offset, random_factor);
+	updated |= eep_update_array(repeat_count_offset, repeat_count);
+	updated |= eep_update_string(sequence_offset, sequence);
+	updated |= eep_update_int(sequence_index_offset, sequence_index);
+	//EEPROM.update(sequence_index_offset, sequence_index);
 
 	return updated;
 }
 
 void retrieve_data() {
 	EEPROM.get(fxn_offset, fxn);
+	//t.print("Fxn: " + String(fxn) + " Offset: " + String(fxn_offset));
+	//fxn = 1;
 	s.set(fxn);
 	EEPROM.get(init_delay_offset, init_delay);
 	EEPROM.get(longest_pulse_offset, longest_pulse);
@@ -412,7 +431,7 @@ void retrieve_data() {
 	EEPROM.get(decay_factor_offset, decay_factor);
 	EEPROM.get(random_factor_offset, random_factor);
 	EEPROM.get(repeat_count_offset, repeat_count);
-	eeprom_get_string(sequence_offset, sequence);
+	eep_get_string(sequence_offset, sequence);
 	EEPROM.get(sequence_index_offset, sequence_index);
 }
 
@@ -456,6 +475,7 @@ void edump_array(String name, unsigned int base_offset, unsigned int* arr) {
 
 void debug() {
 	t.println("Howdy!");
+	eep_update_int(sequence_index_offset, 128);
 	edump(0, 255);
 	
 	sequence_index = 0;
@@ -494,8 +514,8 @@ void debug() {
 
 
 	//user_program = "";
-	//eeprom_update_string(sequence_offset, user_program);
-	eeprom_get_string(sequence_offset, user_program);
+	//eep_update_string(sequence_offset, user_program);
+	eep_get_string(sequence_offset, user_program);
 	t.println("User program: " + user_program);
 	
 	String tmp="      ";
@@ -511,7 +531,7 @@ void debug() {
 	t.println("!" + s + "!");
 
 	s = "";
-	eeprom_get_string(sequence_offset, s);
+	eep_get_string(sequence_offset, s);
 	t.println("!" + s + "5");
 
 
@@ -541,8 +561,8 @@ void debug() {
 		t.println("");
 	}
 
-	//eeprom_update_string(220, test);
-	eeprom_get_string(sequence_offset, tmp);
+	//eep_update_string(220, test);
+	eep_get_string(sequence_offset, tmp);
 	t.println("is killer sequence? " + tmp);
 
 	EEPROM.update(fxn_offset, fxn);
@@ -550,7 +570,7 @@ void debug() {
 	t.println("fxn: " + String(fxn));
 
 	longest_pulse[3] = 9234;
-	//eeprom_update_array(longest_pulse_offset, longest_pulse);
+	//eep_update_array(longest_pulse_offset, longest_pulse);
 	EEPROM.get(longest_pulse_offset, longest_pulse);
 	for (int i = 0; i < sl; i++) {
 		t.println("Longest Pulse: " + String(i) + "\t" + String(longest_pulse[i]));
@@ -707,13 +727,13 @@ void user_serv(int cmd) {
 			else {
 				sequence = sequence.substring(0, sequence_index) + char(cmd) + sequence.substring(sequence_index, sequence.length());
 				if (sequence.length() > sl) sequence.remove(sequence.length() - 1);
-				eeprom_update_string(sequence_offset, sequence);
+				eep_update_string(sequence_offset, sequence);
 				inc_sequence_index();
 			}
 			break;
 		case 127:	// BSP
 			sequence.remove(sequence_index-1, 1);
-			eeprom_update_string(sequence_offset, sequence);
+			eep_update_string(sequence_offset, sequence);
 			dec_sequence_index();
 			break;
 		case 42:	// *
