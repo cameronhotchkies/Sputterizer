@@ -67,3 +67,7 @@ __vm*
 .vs*
 *.vcxproj*
 digikey-footprints*
+
+code/updater/avr
+code/updater/*.hex
+code/updater.zip
