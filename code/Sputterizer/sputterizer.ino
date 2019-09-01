@@ -199,8 +199,8 @@ void printDebug(String s) {
 	t.clrToEOL();
 	t.print(s);
 }
-
 */
+
 
 boolean isDifferent(float a, float b) {
 	int ai = int(100 * a);
@@ -1231,7 +1231,9 @@ void watch_trig() {
 		if (val && !triggered) {
 			trig = !trig;
 			triggered = true;
-			//printDebug(String(trig));
+			//t.setCursor(DEBUG_ROW, "1");
+			//t.print("Trig: " + String(trig));
+			//printDebug("Trig: " + String(trig));
 		}
 		if (Serial.available() > 0) {
 			cmd = Serial.read();
