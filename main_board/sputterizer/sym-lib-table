@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name sputterizer-rescue)(type Legacy)(uri ${KIPRJMOD}/sputterizer-rescue.lib)(options "")(descr ""))
+)

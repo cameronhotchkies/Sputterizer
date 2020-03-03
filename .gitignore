@@ -61,12 +61,13 @@ _notes
 fp-*
 _autosave*
 
+docs*
 Debug*
 Release*
 __vm*
 .vs*
 *.vcxproj*
-digikey-footprints*
+*digikey-footprints.pretty*
 
 code/updater/avr
 code/updater/*.hex

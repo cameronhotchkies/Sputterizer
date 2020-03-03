@@ -119,9 +119,10 @@ void setup() {
 	analogWrite(pwmPin, 255);
 
 	// Wait for PuTTY port to get out of bed. Otherwise we pick up garbage.
+	t.begin();
 	delay(2000);
 
-	t = TerminalVT100();
+	//t = TerminalVT100();
 	s.set_terminal(t);
 
 	//e.debug = true;
@@ -133,7 +134,7 @@ void setup() {
 	t.printChars(stars, "*");
 	t.println("");
 	t.printTitle(stars, F("The Sputterizer  by  GREENFACE LABS "));
-	t.printTitle(stars, F("v2.2"));
+	t.printTitle(stars, F("v2.3"));
 	t.printChars(stars, "*");
 
 	set_default_user_vars();
@@ -159,7 +160,7 @@ void setup() {
 	attachInterrupt(0, intFxnB, RISING);
 	attachInterrupt(1, intFxnA, RISING);
 	Timer1.initialize(50000);
-	Timer1.attachInterrupt(watch_trig);	// heartbeat every 250ms
+	Timer1.attachInterrupt(watch_trig);	// heartbeat every 50ms
 
 }
 
