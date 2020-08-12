@@ -67,8 +67,10 @@ Release*
 __vm*
 .vs*
 *.vcxproj*
-*digikey-footprints.pretty*
+digikey-footprints.pretty*
 
 code/updater/avr
 code/updater/*.hex
 code/updater.zip
+code/build
+temp

@@ -24,6 +24,7 @@
 #define gatePin 13
 #define inPin 4
 #define dirPin 8
+#define reset_trigPin 10
 #define pwmPin 11
 
 int cmd = 0;	// terminal input command
@@ -75,6 +76,14 @@ void intFxnA(void) {
 void intFxnB(void) {
 	s.e.bChanInt();
 }
+void reset_trigger() {
+	// pulse reset_trigPin
+	digitalWrite(reset_trigPin, LOW);
+	delay(1);
+	digitalWrite(reset_trigPin, HIGH);
+	delay(1);
+	digitalWrite(reset_trigPin, LOW);
+}
 
 const String theFunctions[] = {
   "Up",
@@ -112,11 +121,13 @@ void setup() {
 	String data_available = "Data";
 	analogRead(lenPin);
 	pinMode(gatePin, OUTPUT);
+	pinMode(reset_trigPin, OUTPUT);
 	pinMode(pwmPin, OUTPUT);
 	pinMode(inPin, INPUT);
 	pinMode(dirPin, INPUT);
 	digitalWrite(gatePin, LOW);
 	analogWrite(pwmPin, 255);
+	reset_trigger();
 
 	// Wait for PuTTY port to get out of bed. Otherwise we pick up garbage.
 	t.begin();
@@ -134,7 +145,7 @@ void setup() {
 	t.printChars(stars, "*");
 	t.println("");
 	t.printTitle(stars, F("The Sputterizer  by  GREENFACE LABS "));
-	t.printTitle(stars, F("v2.3"));
+	t.printTitle(stars, F("v3.0"));
 	t.printChars(stars, "*");
 
 	set_default_user_vars();
@@ -161,6 +172,8 @@ void setup() {
 	attachInterrupt(1, intFxnA, RISING);
 	Timer1.initialize(50000);
 	Timer1.attachInterrupt(watch_trig);	// heartbeat every 50ms
+
+	//do_delay(1000);
 
 }
 
@@ -983,9 +996,24 @@ void heartbeat()
 	}
 }
 
+void do_delay(unsigned int d) {	
+	if(d<200) {
+		delay(d);
+	} else {
+		boolean ser_avail;
+		unsigned long targetMillis = millis() + d;
+		do {
+			ser_avail = Serial.available() > 0;
+			t.println("Trig: " + String(trig));
+		} while(millis()<targetMillis && !ser_avail);
+	}
+	
+}
+
 void wait_button_up() {
 	//int i = 0;
 	while (digitalRead(inPin)) {
+		reset_trigger();
 		//printDebug("Waiting for button up" + String(i++));
 	}
 	//printDebug("");
@@ -1159,6 +1187,7 @@ void user() {
 void do_trigger() {
 	//wait_button_up();
 	//triggered = false;
+	reset_trigger();
 	print_triggered();
 	/*
 	t.setCursor(TRIGGER_ROW, "1");
@@ -1254,6 +1283,7 @@ void watch_trig() {
 		trig = false;
 		triggered = false;
 	}
+	heartbeat();
 }
 
 void loop() {
@@ -1263,5 +1293,5 @@ void loop() {
 	if (fxn != s.get()) {
 		setFxn();
 	}
-	heartbeat();
+	// heartbeat();
 }
