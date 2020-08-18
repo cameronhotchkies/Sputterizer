@@ -71,6 +71,6 @@ digikey-footprints.pretty*
 
 code/updater/avr
 code/updater/*.hex
-code/updater.zip
 code/build
+code/updater.zip
 temp
